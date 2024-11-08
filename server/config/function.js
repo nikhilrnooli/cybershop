@@ -1,4 +1,5 @@
 /* This all of are helper function */
+
 const userModel = require("../models/users");
 
 exports.toTitleCase = function (str) {
@@ -17,22 +18,19 @@ exports.validateEmail = function (mail) {
 
 exports.emailCheckInDatabase = async function (email) {
   let user = await userModel.findOne({ email: email });
-  user.exec((err, data) => {
-    if (!data) {
-      return false;
-    } else {
-      return true;
-    }
-  });
+  if (user) {
+    return true;  // Email exists in the database
+  } else {
+    return false; // Email does not exist in the database
+  }
 };
 
 exports.phoneNumberCheckInDatabase = async function (phoneNumber) {
   let user = await userModel.findOne({ phoneNumber: phoneNumber });
-  user.exec((err, data) => {
-    if (data) {
-      return true;
-    } else {
-      return false;
-    }
-  });
+  if (user) {
+    return true;  // Phone number exists in the database
+  } else {
+    return false; // Phone number does not exist in the database
+  }
 };
+
